@@ -11,6 +11,7 @@ public class Java {
         KotlinUtils.dp2px(2f);
         KotlinUtils.dp2px(2f);
         Utils.INSTANCE.toast("message");
+        Utils.INSTANCE.toast("shjak", 122);
 
         BaseApplication.currentApplication();
     }

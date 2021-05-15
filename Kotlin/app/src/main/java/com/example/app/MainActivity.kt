@@ -1,8 +1,11 @@
 package com.example.app
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -52,24 +55,25 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
 
         val user = User(username, password, code)
 
-        if (verify(user)) {
+        fun verify(): Boolean {
+            if ((user.username?.length ?: 0) < 4) {
+                Utils.toast("用户名不合法")
+                return false
+            }
+            if (user.password?.length ?: 0 < 4) {
+                Utils.toast("密码不合法")
+                return false
+            }
+            return true
+        }
+
+        if (verify()) {
             CacheUtils.save(usernameKey, username)
             CacheUtils.save(passwordKey, password)
             startActivity(Intent(this, LessonActivity::class.java))
         }
 
-
     }
 
-    private fun verify(user: User): Boolean {
-        if (user.username == null || user.username!!.length < 4) {
-            Utils.toast("用户名不合法")
-            return false
-        }
-        if (user.password == null || user.password!!.length < 4) {
-            Utils.toast("密码不合法")
-            return false
-        }
-        return true
-    }
+
 }
